@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Search, Filter, ArrowUpDown, Download, X, AlertTriangle,
   CheckCircle2, DollarSign, Package, TrendingUp, ChevronRight
@@ -7,6 +8,7 @@ import { api } from "../api/client";
 import { ProductListItem, ProductDetail } from "../types";
 
 export const ProductsPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<ProductListItem[]>([]);
   const [categories, setCategories] = useState<Array<{ id: number; name: string }>>([]);
   const [total, setTotal] = useState<number>(0);
@@ -53,6 +55,15 @@ export const ProductsPage: React.FC = () => {
   useEffect(() => {
     fetchProductsList();
   }, [search, selectedCategory, selectedRisk, sortBy, sortOrder, page]);
+
+  // Sync search param from URL
+  useEffect(() => {
+    const q = searchParams.get("search");
+    if (q !== null) {
+      setSearch(q);
+      setPage(1);
+    }
+  }, [searchParams]);
 
   // Load product detail drawer
   const openProductDetail = (id: number) => {

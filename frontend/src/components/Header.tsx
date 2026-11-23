@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Search, Download, Calendar, ChevronDown } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search, Download, Calendar, ChevronDown, X, ArrowRight, Package } from "lucide-react";
+import { api } from "../api/client";
+import { ProductListItem } from "../types";
 
 interface HeaderProps {
   selectedPeriod: string;
@@ -14,7 +17,13 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   onSearchChange
 }) => {
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [searchResults, setSearchResults] = useState<ProductListItem[]>([]);
+  const [searchTotal, setSearchTotal] = useState(0);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const periodLabels: Record<string, string> = {
     "7d": "Last 7 Days",
@@ -23,11 +32,59 @@ export const Header: React.FC<HeaderProps> = ({
     "12m": "Last 1 Year"
   };
 
+  // Perform live search when searchQuery changes
+  useEffect(() => {
+    const trimmed = searchQuery.trim();
+    if (trimmed.length < 1) {
+      setSearchResults([]);
+      setSearchTotal(0);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setSearchLoading(true);
+      api.getProducts({ search: trimmed, page_size: 5 })
+        .then((res) => {
+          setSearchResults(res.items);
+          setSearchTotal(res.total);
+        })
+        .catch(console.error)
+        .finally(() => setSearchLoading(false));
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Handle click outside search container
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      setSearchFocused(false);
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else if (e.key === "Escape") {
+      setSearchFocused(false);
+    }
+  };
+
+  const handleSelectProduct = (productName: string) => {
+    setSearchFocused(false);
+    navigate(`/products?search=${encodeURIComponent(productName)}`);
+  };
+
   return (
     <header className="h-16 bg-white border-b border-[#E8EEF5] px-6 flex items-center justify-between sticky top-0 z-30 select-none">
       {/* LEFT: RETURVEX Logo matching reference image */}
       <div className="flex items-center space-x-3">
-        <div className="flex items-center space-x-2.5">
+        <div className="flex items-center space-x-2.5 cursor-pointer" onClick={() => navigate("/")}>
           {/* Orange/Coral Shopping Bag Icon with folded look from reference image */}
           <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF6B35] to-[#FA5252] flex items-center justify-center text-white shadow-xs">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,18 +103,109 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* CENTER: Search Bar matching pill shape with 'Search anything...' */}
-      <div className="flex-1 max-w-md mx-8 hidden md:block">
+      {/* CENTER: Live Global Search Bar */}
+      <div ref={searchContainerRef} className="flex-1 max-w-md mx-8 hidden md:block relative">
         <div className="relative">
           <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={(e) => {
+              onSearchChange(e.target.value);
+              setSearchFocused(true);
+            }}
+            onFocus={() => setSearchFocused(true)}
+            onKeyDown={handleKeyDown}
             placeholder="Search anything..."
-            className="w-full bg-[#F3F6FA] border border-transparent hover:border-[#DFE6EF] focus:border-[#2A62F8] focus:bg-white rounded-full pl-10 pr-4 py-2 text-xs text-[#1A2840] placeholder-[#94A3B8] focus:outline-none transition-all"
+            className="w-full bg-[#F3F6FA] border border-transparent hover:border-[#DFE6EF] focus:border-[#2A62F8] focus:bg-white rounded-full pl-10 pr-9 py-2 text-xs text-[#1A2840] placeholder-[#94A3B8] focus:outline-none transition-all shadow-2xs"
           />
+          {searchQuery && (
+            <button
+              onClick={() => {
+                onSearchChange("");
+                setSearchResults([]);
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#1E293B]"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
+
+        {/* Live Search Results Dropdown Popover */}
+        {searchFocused && searchQuery.trim().length > 0 && (
+          <div className="absolute left-0 right-0 mt-2 bg-white border border-[#DFE6EF] rounded-xl shadow-xl overflow-hidden z-50 text-xs animate-in fade-in slide-in-from-top-1 duration-150">
+            <div className="px-3.5 py-2 bg-[#F8FAFC] border-b border-[#DFE6EF] flex items-center justify-between text-[11px] text-[#64748B]">
+              <span>
+                {searchLoading ? "Searching catalog..." : `Matching Products (${searchTotal})`}
+              </span>
+              <span className="text-[10px] text-[#94A3B8]">Press Enter to view all</span>
+            </div>
+
+            <div className="max-h-64 overflow-y-auto divide-y divide-[#F1F5F9]">
+              {searchResults.length > 0 ? (
+                searchResults.map((p) => {
+                  const isCrit = p.risk_tier === "Critical";
+                  const isHigh = p.risk_tier === "High";
+                  return (
+                    <div
+                      key={p.id}
+                      onClick={() => handleSelectProduct(p.product_name)}
+                      className="px-3.5 py-2.5 hover:bg-[#F3F6FA] cursor-pointer transition-colors flex items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-2.5 min-w-0">
+                        <div className="w-7 h-7 rounded-md bg-[#EFF6FF] text-[#2A62F8] flex items-center justify-center shrink-0">
+                          <Package className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-[#1E293B] truncate">{p.product_name}</div>
+                          <div className="text-[11px] text-[#64748B] flex items-center space-x-2">
+                            <span className="font-mono text-[#2A62F8]">{p.product_code}</span>
+                            <span>&bull;</span>
+                            <span>{p.category_name}</span>
+                            <span>&bull;</span>
+                            <span className="font-medium text-[#1E293B]">₹{p.selling_price.toLocaleString()}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="shrink-0 text-right ml-3">
+                        <span
+                          className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                            isCrit
+                              ? "bg-[#FEF2F2] text-[#DC2626]"
+                              : isHigh
+                              ? "bg-[#FFFBEB] text-[#D97706]"
+                              : "bg-[#F0FDF4] text-[#16A34A]"
+                          }`}
+                        >
+                          {p.return_rate.toFixed(1)}% Ret
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : !searchLoading ? (
+                <div className="px-4 py-6 text-center text-[#64748B]">
+                  No products found matching &ldquo;{searchQuery}&rdquo;
+                </div>
+              ) : null}
+            </div>
+
+            {searchTotal > 0 && (
+              <div
+                onClick={() => {
+                  setSearchFocused(false);
+                  navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+                }}
+                className="px-3.5 py-2 bg-[#F8FAFC] border-t border-[#DFE6EF] hover:bg-[#EFF6FF] cursor-pointer transition-colors flex items-center justify-between text-[#2A62F8] font-semibold text-[11px]"
+              >
+                <span>View all {searchTotal} products in Catalog</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* RIGHT: Live Data indicator, Date range dropdown, Export Report, User Avatar */}
@@ -88,8 +236,8 @@ export const Header: React.FC<HeaderProps> = ({
                     onPeriodChange(p);
                     setDropdownOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-1.5 hover:bg-[#F1F5F9] transition-colors ${
-                    selectedPeriod === p ? "text-[#2A62F8] font-semibold bg-[#EFF6FF]" : "text-[#334155]"
+                  className={`w-full text-left px-3 py-1.5 hover:bg-[#F3F6FA] transition-colors ${
+                    selectedPeriod === p ? "font-bold text-[#2A62F8] bg-[#EFF6FF]" : "text-[#26364B]"
                   }`}
                 >
                   {periodLabels[p]}
@@ -99,18 +247,18 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Export Report Button matching dark button */}
+        {/* Export Report CTA */}
         <a
-          href={`/api/reports/export-pdf?period=${selectedPeriod}`}
+          href={`/api/reports/export-pdf?report_type=executive&period=${selectedPeriod}`}
           download
-          className="flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-[#1B2A4A] hover:bg-[#121F38] text-white text-xs font-semibold shadow-xs transition-colors"
+          className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-semibold shadow-xs transition-colors"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-3.5 h-3.5 text-white" />
           <span>Export Report</span>
         </a>
 
-        {/* Avatar 'FA' matching reference */}
-        <div className="w-8 h-8 rounded-full bg-[#E2E8F0] border border-[#CBD5E1] flex items-center justify-center text-xs font-bold text-[#1E293B]">
+        {/* User Profile Avatar matching 'FA' in reference */}
+        <div className="w-8 h-8 rounded-full bg-[#E2E8F0] border border-[#CBD5E1] flex items-center justify-center text-xs font-bold text-[#334155] shadow-2xs">
           FA
         </div>
       </div>
