@@ -76,7 +76,7 @@ export const RootCausesPage: React.FC = () => {
               </div>
 
               <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height={256} minHeight={256}>
                   <ComposedChart data={data.pareto_data} margin={{ top: 10, right: 20, bottom: 25, left: -10 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                     <XAxis
@@ -109,7 +109,7 @@ export const RootCausesPage: React.FC = () => {
                         return [val, name];
                       }}
                     />
-                    <Bar yAxisId="left" dataKey="count" fill="#3567C8" radius={[4, 4, 0, 0]} barSize={26} />
+                    <Bar yAxisId="left" dataKey="count" fill="#3567C8" radius={[4, 4, 0, 0]} barSize={26} isAnimationActive={false} />
                     <Line
                       yAxisId="right"
                       type="monotone"
@@ -117,6 +117,7 @@ export const RootCausesPage: React.FC = () => {
                       stroke="#E47D68"
                       strokeWidth={2.5}
                       dot={{ r: 3, fill: "#E47D68" }}
+                      isAnimationActive={false}
                     />
                   </ComposedChart>
                 </ResponsiveContainer>
