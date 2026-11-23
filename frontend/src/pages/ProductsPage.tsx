@@ -75,9 +75,6 @@ export const ProductsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#DFE6EF]">
         <div>
           <h1 className="text-xl font-bold text-[#24344D] tracking-tight">Product Return Intelligence</h1>
-          <p className="text-xs text-[#718096]">
-            Catalog-wide return telemetry, benchmark comparisons, and individual SKU risk profiles.
-          </p>
         </div>
 
         <a
@@ -159,7 +156,7 @@ export const ProductsPage: React.FC = () => {
               <option value="return_rate-desc">Return Rate: High to Low</option>
               <option value="return_rate-asc">Return Rate: Low to High</option>
               <option value="returns-desc">Returns Count: High to Low</option>
-              <option value="financial_cost-desc">Financial Impact: High to Low</option>
+              <option value="financial_cost-desc">Return Cost: High to Low</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="orders-desc">Orders: High to Low</option>
             </select>
@@ -181,7 +178,7 @@ export const ProductsPage: React.FC = () => {
                 <th className="py-2.5 px-3">Orders</th>
                 <th className="py-2.5 px-3">Returns</th>
                 <th className="py-2.5 px-3">Return Rate</th>
-                <th className="py-2.5 px-3">Total Cost</th>
+                <th className="py-2.5 px-3">Return Cost</th>
                 <th className="py-2.5 px-3">Risk Tier</th>
                 <th className="py-2.5 px-3 text-right">Actions</th>
               </tr>

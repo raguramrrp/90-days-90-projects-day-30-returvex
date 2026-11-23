@@ -35,9 +35,6 @@ export const RootCausesPage: React.FC = () => {
               Signature Module
             </span>
           </div>
-          <p className="text-xs text-[#718096]">
-            Empirical diagnostics, Pareto 80/20 concentration, and verifiable evidence distinguishing correlation from causation.
-          </p>
         </div>
 
         {/* Period Selector */}

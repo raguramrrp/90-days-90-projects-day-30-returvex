@@ -450,19 +450,21 @@ def generate_synthetic_data(num_customers=1000, num_products=100, num_orders=500
                 )[0]
 
             refund = order_total
-            # Financial components
+            # Financial components: realistic reverse logistics & processing
             rev_logistics = round(random.uniform(110.0, 180.0), 2)
-            restocking = round(order_total * 0.05, 2)
+            restocking = round(random.uniform(40.0, 90.0), 2)
             
             if reason in ["Damaged Product", "Product Quality"]:
-                write_off = round(order_total * random.uniform(0.15, 0.35), 2)
-                recoverable = round(order_total * random.uniform(0.10, 0.30), 2)
+                # Defective units have supplier RTV warranty credit offset (recovering ~88-93% via vendor credit)
+                write_off = round(order_total * random.uniform(0.04, 0.08), 2)
+                recoverable = round(order_total * random.uniform(0.88, 0.93), 2)
             elif reason in ["Size/Fit Issue", "Changed Mind"]:
-                write_off = 0.0
-                recoverable = round(order_total * random.uniform(0.85, 0.95), 2)
+                # Sizing & mind changes restocked into inventory with minimal repackaging loss
+                write_off = round(order_total * random.uniform(0.01, 0.03), 2)
+                recoverable = round(order_total * random.uniform(0.95, 0.98), 2)
             else:
-                write_off = round(order_total * 0.05, 2)
-                recoverable = round(order_total * 0.75, 2)
+                write_off = round(order_total * random.uniform(0.02, 0.05), 2)
+                recoverable = round(order_total * random.uniform(0.92, 0.96), 2)
 
             ret_num = f"RET-2026-{return_counter:05d}"
             return_counter += 1

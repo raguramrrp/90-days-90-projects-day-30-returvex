@@ -32,9 +32,6 @@ export const ReportsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#DFE6EF]">
         <div>
           <h1 className="text-xl font-bold text-[#24344D] tracking-tight">Enterprise Reporting Centre</h1>
-          <p className="text-xs text-[#718096]">
-            Generate, preview, and export executive briefs, SKU registers, and financial audit documentation.
-          </p>
         </div>
 
         {/* Export Buttons */}

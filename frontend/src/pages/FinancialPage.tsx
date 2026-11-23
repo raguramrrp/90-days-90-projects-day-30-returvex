@@ -29,9 +29,6 @@ export const FinancialPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#DFE6EF]">
         <div>
           <h1 className="text-xl font-bold text-[#24344D] tracking-tight">Financial Intelligence & Profit Recovery</h1>
-          <p className="text-xs text-[#718096]">
-            Analyze true return cost accounting: gross refunds, reverse logistics waste, write-offs, and salvage recovery.
-          </p>
         </div>
 
         <div className="flex items-center space-x-3 self-start sm:self-auto">
@@ -63,28 +60,10 @@ export const FinancialPage: React.FC = () => {
 
       {loading && !data ? (
         <div className="p-12 text-center text-xs text-[#718096]">
-          Calculating financial cost formulas across returns ledger...
+          Loading financial intelligence metrics...
         </div>
       ) : data ? (
         <>
-          {/* Formula Callout Banner */}
-          <div className="p-4 rounded-lg bg-gradient-to-r from-[#F8FAFC] to-[#EAF0F7] border border-[#DFE6EF] flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
-            <div className="space-y-1">
-              <span className="font-mono text-[11px] font-bold text-[#3567C8] uppercase tracking-wide">
-                Accounting Formula:
-              </span>
-              <p className="font-mono text-sm font-semibold text-[#24344D]">
-                {data.formula_documentation.formula}
-              </p>
-              <p className="text-[#718096] text-[11px]">
-                {data.formula_documentation.explanation}
-              </p>
-            </div>
-            <span className="px-2.5 py-1 rounded bg-white text-[#3567C8] font-semibold text-[11px] border border-[#BAC7D8] self-start md:self-auto">
-              Net Loss &ne; Gross Refunds
-            </span>
-          </div>
-
           {/* KPI Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {/* 1. Gross Refunds */}

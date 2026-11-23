@@ -97,9 +97,6 @@ export const PredictionsPage: React.FC = () => {
               Supervised ML
             </span>
           </div>
-          <p className="text-xs text-[#718096]">
-            Estimate return probabilities before fulfillment using chronological pre-dispatch features without target leakage.
-          </p>
         </div>
 
         {/* Tab Switcher */}

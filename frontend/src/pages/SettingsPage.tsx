@@ -75,9 +75,6 @@ export const SettingsPage: React.FC = () => {
       {/* Title */}
       <div className="pb-2 border-b border-[#DFE6EF]">
         <h1 className="text-xl font-bold text-[#24344D] tracking-tight">Workstation Configuration & Settings</h1>
-        <p className="text-xs text-[#718096]">
-          Configure currency symbols, accounting parameters, risk classification thresholds, and database maintenance.
-        </p>
       </div>
 
       {statusMsg && (
@@ -94,9 +91,6 @@ export const SettingsPage: React.FC = () => {
           <div className="space-y-4">
             <div className="pb-2 border-b border-[#DFE6EF]">
               <h2 className="text-sm font-semibold text-[#24344D]">1. Financial Cost Model Defaults</h2>
-              <p className="text-[11px] text-[#718096]">
-                Variables utilized in Net Return Loss accounting formulas.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
