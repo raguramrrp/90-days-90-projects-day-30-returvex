@@ -390,14 +390,7 @@ VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 
 ---
 
-## 17. Author & 90 Days Challenge Context
 
-- **Challenge**: 90 Days – 90 Projects Challenge (Day 30 Project)
-- **Domain**: E-Commerce Intelligence / Machine Learning / Financial Analytics
-- **Standard**: Production-style full-stack application built for hackathons, engineering portfolios, and enterprise recruitment.
-
----
-
-## 18. License
+## 17. License
 
 This project is licensed under the **MIT License**. See the [LICENSE](file:///D:/90%20days/90-days-90-projects-day-30-returvex/LICENSE) file for complete terms.
