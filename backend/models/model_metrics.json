@@ -1,0 +1,129 @@
+{
+  "model_name": "Random Forest Classifier",
+  "version": "v1.0.0",
+  "algorithm": "RandomForestClassifier",
+  "training_date": "2026-11-23T17:47:43.092096",
+  "accuracy": 0.632,
+  "precision": 0.2578125,
+  "recall": 0.5439560439560439,
+  "f1_score": 0.3498233215547703,
+  "roc_auc": 0.6167683172573148,
+  "confusion_matrix": {
+    "true_negatives": 533,
+    "false_positives": 285,
+    "false_negatives": 83,
+    "true_positives": 99
+  },
+  "classification_report": {
+    "0": {
+      "precision": 0.8652597402597403,
+      "recall": 0.6515892420537898,
+      "f1-score": 0.7433751743375174,
+      "support": 818.0
+    },
+    "1": {
+      "precision": 0.2578125,
+      "recall": 0.5439560439560439,
+      "f1-score": 0.3498233215547703,
+      "support": 182.0
+    },
+    "accuracy": 0.632,
+    "macro avg": {
+      "precision": 0.5615361201298701,
+      "recall": 0.5977726430049168,
+      "f1-score": 0.5465992479461439,
+      "support": 1000.0
+    },
+    "weighted avg": {
+      "precision": 0.7547043425324675,
+      "recall": 0.632,
+      "f1-score": 0.6717487371310574,
+      "support": 1000.0
+    }
+  },
+  "feature_importances": [
+    {
+      "feature": "selling_price",
+      "importance": 0.2047
+    },
+    {
+      "feature": "discount_amount",
+      "importance": 0.144
+    },
+    {
+      "feature": "customer_order_count",
+      "importance": 0.0797
+    },
+    {
+      "feature": "customer_prior_return_rate",
+      "importance": 0.0642
+    },
+    {
+      "feature": "category_name_Sports & Fitness",
+      "importance": 0.0325
+    },
+    {
+      "feature": "category_name_Apparel & Fashion",
+      "importance": 0.0261
+    },
+    {
+      "feature": "payment_method_Cash on Delivery",
+      "importance": 0.0253
+    },
+    {
+      "feature": "order_quantity",
+      "importance": 0.0219
+    },
+    {
+      "feature": "payment_method_Debit Card",
+      "importance": 0.0188
+    },
+    {
+      "feature": "payment_method_UPI",
+      "importance": 0.0177
+    },
+    {
+      "feature": "category_name_Beauty & Cosmetics",
+      "importance": 0.0172
+    },
+    {
+      "feature": "estimated_delivery_days",
+      "importance": 0.0168
+    },
+    {
+      "feature": "category_name_Books & Media",
+      "importance": 0.0168
+    },
+    {
+      "feature": "payment_method_Net Banking",
+      "importance": 0.0162
+    },
+    {
+      "feature": "category_name_Footwear",
+      "importance": 0.0157
+    }
+  ],
+  "class_distribution": {
+    "total_orders": 5000,
+    "not_returned_count": 4088,
+    "returned_count": 912,
+    "return_rate_pct": 18.24
+  },
+  "comparison": {
+    "logistic_regression": {
+      "accuracy": 0.559,
+      "precision": 0.21286031042128603,
+      "recall": 0.5274725274725275,
+      "f1_score": 0.3033175355450237,
+      "roc_auc": 0.5695075096053092
+    },
+    "random_forest": {
+      "accuracy": 0.632,
+      "precision": 0.2578125,
+      "recall": 0.5439560439560439,
+      "f1_score": 0.3498233215547703,
+      "roc_auc": 0.6167683172573148
+    }
+  },
+  "notes": "Trained on zero-leakage chronological features: customer historical order count, customer prior return rate, item price, promotional discount, estimated shipping transit delay, shipping state, payment method, category."
+}
