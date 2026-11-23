@@ -40,3 +40,7 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Screenshots (Excluded from git push)
+screenshots/
+app_screenshots/
