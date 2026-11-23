@@ -85,6 +85,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ period, searchQuer
       .finally(() => setTrendLoading(false));
   }, [trendPeriod]);
 
+  // Map backend TrendPoint (total_orders, returned_orders) to chart keys (orders, returns)
+  const chartTrends = trends.map((t) => ({
+    ...t,
+    orders: t.total_orders,
+    returns: t.returned_orders,
+  }));
+
   // Format currency in Lakhs or standard
   const formatCostLakhs = (val: number) => {
     if (val >= 100000) {
@@ -318,7 +325,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ period, searchQuer
               </div>
             )}
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={chartTrends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="orderGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.22} />
@@ -350,18 +357,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ period, searchQuer
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
-                      const oVal = payload[0]?.value || 0;
-                      const rVal = payload[1]?.value || 0;
+                      const oVal = payload.find((p: any) => p.dataKey === "orders")?.value ?? payload[0]?.value ?? 0;
+                      const rVal = payload.find((p: any) => p.dataKey === "returns")?.value ?? payload[1]?.value ?? 0;
                       const d = new Date(label);
                       const formattedDate = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
                       return (
                         <div className="bg-white/95 backdrop-blur-xs border border-[#DFE6EF] shadow-md rounded-lg p-2.5 text-xs">
                           <p className="font-semibold text-[11px] text-[#64748B] mb-1">{formattedDate}</p>
                           <p className="font-medium text-[#2563EB]">
-                            Orders: <span className="font-bold">{oVal.toLocaleString()}</span>
+                            Orders: <span className="font-bold">{Number(oVal).toLocaleString()}</span>
                           </p>
                           <p className="font-medium text-[#F97316]">
-                            Returns: <span className="font-bold">{rVal.toLocaleString()}</span>
+                            Returns: <span className="font-bold">{Number(rVal).toLocaleString()}</span>
                           </p>
                         </div>
                       );

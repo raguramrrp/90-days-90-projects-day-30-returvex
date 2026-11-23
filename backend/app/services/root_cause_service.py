@@ -92,9 +92,9 @@ def get_root_causes_overview(db: Session, period: str = "30d") -> RootCauseOverv
             baseline_pct=25.0,
             excess_ratio=round(size_share / 25.0, 2),
             time_period=f"Last {days} Days",
-            evidence=f"{apparel_size_returns} of {total_apparel_returns} category returns ({size_share:.1f}%) were caused by sizing/fit complaints, exceeding the 25% catalog baseline.",
-            correlation_vs_causation_note="Empirical correlation is high. Customer post-return comments cite brand-specific sizing variance rather than deliberate multi-size bracketing.",
-            recommendation="Deploy an interactive 3D/body-measurement size finder on product display pages and revise garment measurement charts.",
+            evidence=f"{size_share:.1f}% of returns in apparel and footwear are due to wrong size or poor fit.",
+            correlation_vs_causation_note="Brand sizes run 1 size smaller than standard Indian sizing.",
+            recommendation="Update size charts and add a size recommender on product pages.",
             severity="High" if size_share > 40 else "Moderate"
         ))
 
@@ -122,9 +122,9 @@ def get_root_causes_overview(db: Session, period: str = "30d") -> RootCauseOverv
             baseline_pct=14.0,
             excess_ratio=round(nova_defect_pct / 14.0, 2),
             time_period=f"Last {days} Days",
-            evidence=f"Nova Retail shipments exhibit a {nova_defect_pct:.1f}% defect return rate vs the 14% platform average for hardware vendors.",
-            correlation_vs_causation_note="Plausible mechanical causation: High failure rates concentrate specifically on Bluetooth pairing and audio driver hardware batches.",
-            recommendation="Issue immediate vendor quarantine on affected SKU batches, enforce pre-dispatch factory QC, and withhold settlement reserves.",
+            evidence=f"Nova Retail has a {nova_defect_pct:.1f}% defect return rate (platform average is 14%).",
+            correlation_vs_causation_note="Defective Bluetooth chips and audio drivers in recent vendor shipments.",
+            recommendation="Pause stock from this vendor until quality check passes.",
             severity="Critical"
         ))
 
@@ -152,9 +152,9 @@ def get_root_causes_overview(db: Session, period: str = "30d") -> RootCauseOverv
             baseline_pct=20.0,
             excess_ratio=round(delay_share / 20.0, 2),
             time_period=f"Last {days} Days",
-            evidence=f"Orders routed to remote regional hubs experienced 6+ days transit latency, leading to delivery refusal and buyer cancellation.",
-            correlation_vs_causation_note="Direct logistical causation: Courier transit telemetry confirms delivery SLA breaches precede buyer rejection.",
-            recommendation="Switch to priority air cargo for Northeast zones or establish localized micro-fulfillment hubs.",
+            evidence="Orders to remote states take 6+ days to deliver, causing customer cancellations.",
+            correlation_vs_causation_note="Delivery delays directly lead to customer refusal at doorstep.",
+            recommendation="Switch to faster air courier services for remote regions.",
             severity="Warning"
         ))
 
@@ -176,9 +176,9 @@ def get_root_causes_overview(db: Session, period: str = "30d") -> RootCauseOverv
             baseline_pct=7.5,
             excess_ratio=2.05,
             time_period=f"Last {days} Days",
-            evidence=f"{desc_returns} high-ticket orders were returned due to specification mismatch regarding material feel or feature omission.",
-            correlation_vs_causation_note="Correlational: Reviewing unboxing videos and specifications indicates marketing copy may overstate secondary features.",
-            recommendation="Audit product specification bullets, add detailed dimensions diagrams, and upload realistic unedited product imagery.",
+            evidence=f"{desc_returns} premium items returned because actual item differed from photos.",
+            correlation_vs_causation_note="Product photos overstate material quality and build finish.",
+            recommendation="Add real unedited product photos and exact product dimensions.",
             severity="Warning"
         ))
 

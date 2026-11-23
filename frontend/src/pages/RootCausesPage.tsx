@@ -68,10 +68,7 @@ export const RootCausesPage: React.FC = () => {
             <div className="lg:col-span-2 returvex-card p-5 space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-[#DFE6EF]">
                 <div>
-                  <h2 className="text-sm font-semibold text-[#24344D]">Pareto 80/20 Analysis (Cumulative Returns)</h2>
-                  <p className="text-[11px] text-[#718096]">
-                    Identifies the vital few return reasons accounting for the majority of overall return losses.
-                  </p>
+                  <h2 className="text-sm font-semibold text-[#24344D]">Pareto 80/20 Analysis</h2>
                 </div>
                 <span className="text-[10px] text-[#3567C8] bg-[#EAF0F7] px-2 py-0.5 rounded font-medium">
                   Dominant: {data.dominant_reason}
@@ -179,13 +176,8 @@ export const RootCausesPage: React.FC = () => {
 
           {/* SECTION 2: EVIDENCE-BACKED INVESTIGATION FINDINGS */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-base font-bold text-[#24344D]">Evidence-Backed Root Cause Diagnostics</h2>
-                <p className="text-xs text-[#718096]">
-                  Actionable insights generated from database correlation telemetry and logistic tracking logs.
-                </p>
-              </div>
+            <div className="flex items-center justify-between pb-1 border-b border-[#DFE6EF]">
+              <h2 className="text-base font-bold text-[#24344D]">Root Cause Diagnostics</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -206,7 +198,7 @@ export const RootCausesPage: React.FC = () => {
                         <div className="flex items-center space-x-2 text-[10px] text-[#718096] mb-1">
                           <span className="font-mono font-semibold text-[#3567C8]">{f.finding_id}</span>
                           <span>•</span>
-                          <span>Dimension: {f.dimension}</span>
+                          <span>{f.dimension}</span>
                           <span>•</span>
                           <span>{f.time_period}</span>
                         </div>
@@ -245,19 +237,19 @@ export const RootCausesPage: React.FC = () => {
 
                     {/* Verifiable Evidence */}
                     <div className="space-y-1">
-                      <span className="text-[11px] font-semibold text-[#24344D] uppercase tracking-wide">
-                        Statistical Evidence:
+                      <span className="text-[11px] font-semibold text-[#24344D]">
+                        Evidence:
                       </span>
-                      <p className="text-xs text-[#718096] leading-relaxed bg-[#F3F6FA] p-2.5 rounded border border-[#DFE6EF]">
+                      <p className="text-xs text-[#475569] leading-relaxed bg-[#F8FAFC] p-2.5 rounded border border-[#DFE6EF]">
                         {f.evidence}
                       </p>
                     </div>
 
-                    {/* Correlation vs Causation Note (CRITICAL REQUIREMENT) */}
-                    <div className="p-2.5 rounded-lg bg-[#FFFDF5] border border-[#FCEECB] text-[11px] text-[#92400E]">
+                    {/* Root Cause Note */}
+                    <div className="p-2.5 rounded-lg bg-[#FFFDF5] border border-[#FCEECB] text-xs text-[#92400E]">
                       <div className="flex items-center space-x-1.5 font-semibold mb-0.5">
                         <Info className="w-3.5 h-3.5" />
-                        <span>Correlation vs. Causation Analysis:</span>
+                        <span>Root Cause:</span>
                       </div>
                       <p className="leading-relaxed">{f.correlation_vs_causation_note}</p>
                     </div>
@@ -266,8 +258,8 @@ export const RootCausesPage: React.FC = () => {
                     <div className="pt-2 border-t border-[#DFE6EF] flex items-start space-x-2 text-xs">
                       <CheckCircle2 className="w-4 h-4 text-[#58A88B] shrink-0 mt-0.5" />
                       <div>
-                        <span className="font-semibold text-[#24344D]">Recommended Intervention:</span>
-                        <p className="text-[#718096] mt-0.5 text-[11px]">{f.recommendation}</p>
+                        <span className="font-semibold text-[#24344D]">Recommended Action:</span>
+                        <p className="text-[#475569] mt-0.5 text-xs">{f.recommendation}</p>
                       </div>
                     </div>
                   </div>
