@@ -44,9 +44,29 @@ RETURVEX is architected to deliver direct, quantitative answers to key operation
 
 ---
 
-## 3. Visual Design System & Reference Alignment
+## 3. 📸 Workstation Visuals & Platform Screenshots
 
-RETURVEX precisely mirrors the visual identity, component proportions, and analytical palette of commercial enterprise BI workstations (reference: `screenshots/dashboard.jpg`):
+### 1. Returns Intelligence Dashboard
+*Executive workstation interface reproducing the reference composition: 4 analytical KPI cards with SVG sparklines, Return Trends dual-area chart (Orders vs. Returns), Return Reasons doughnut with centered volume total, Top Returning Products table, and interactive India regional return rate choropleth map.*
+![Returns Intelligence Dashboard](docs/screenshots/01-dashboard.png)
+
+### 2. Product Returns Intelligence & SKU Risk
+*Deep SKU-level return intelligence featuring calibrated Return Costs, return rate benchmarking against category baselines, risk tier classifications, and category filters.*
+![Product Returns Intelligence](docs/screenshots/02-products.png)
+
+### 3. Root Cause Intelligence & Diagnostics
+*Pareto 80/20 cumulative return loss distribution, Return Reason Velocity tracking vs prior window, and concise evidence-backed diagnostic cards identifying sizing variance, vendor defects, and transit bottlenecks.*
+![Root Cause Intelligence](docs/screenshots/03-root-causes.png)
+
+### 4. Financial Impact & Recovery Accounting
+*GAAP-compliant financial loss accounting isolating gross customer refunds, reverse logistics freight waste, inspection & restocking costs, inventory write-offs, and recoverable salvage resale values.*
+![Financial Impact & Recovery Accounting](docs/screenshots/04-financial-intelligence.png)
+
+---
+
+## 4. Visual Design System & Reference Alignment
+
+RETURVEX precisely mirrors the visual identity, component proportions, and analytical palette of commercial enterprise BI workstations (reference: `docs/screenshots/01-dashboard.png`):
 
 - **Light Surface Architecture**: Clean white `#FFFFFF` cards on an ergonomic soft blue-gray `#F3F6FA` canvas.
 - **Pastel KPI Card System**:
@@ -60,7 +80,7 @@ RETURVEX precisely mirrors the visual identity, component proportions, and analy
 
 ---
 
-## 4. Key Value Propositions & Differentiators
+## 5. Key Value Propositions & Differentiators
 
 | Feature | Standard Analytics Dashboards | RETURVEX Platform |
 | :--- | :--- | :--- |
@@ -73,7 +93,7 @@ RETURVEX precisely mirrors the visual identity, component proportions, and analy
 
 ---
 
-## 5. Technology Stack
+## 6. Technology Stack
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
@@ -102,7 +122,7 @@ RETURVEX precisely mirrors the visual identity, component proportions, and analy
 
 ---
 
-## 6. Financial Loss Accounting Model
+## 7. Financial Loss Accounting Model
 
 Standard accounting often underestimates returns by only noting customer refunds. RETURVEX applies the complete reverse logistics formula:
 
@@ -116,7 +136,7 @@ $$\text{Net Return Loss} = \text{Gross Refunds} + \text{Reverse Logistics} + \te
 
 ---
 
-## 7. Zero-Target-Leakage Machine Learning Architecture
+## 8. Zero-Target-Leakage Machine Learning Architecture
 
 Predicting return risk before an order ships requires strict discipline to prevent future information from leaking into the training pipeline:
 
@@ -145,7 +165,7 @@ Predicting return risk before an order ships requires strict discipline to preve
 
 ---
 
-## 8. Synthetic Dataset Architecture & Seeded Patterns
+## 9. Synthetic Dataset Architecture & Seeded Patterns
 
 The demonstration database is generated using seed `42` (`backend/scripts/seed_data.py`), reflecting realistic Indian e-commerce operational patterns:
 
@@ -156,7 +176,7 @@ The demonstration database is generated using seed `42` (`backend/scripts/seed_d
 
 ---
 
-## 9. Repository Structure
+## 10. Repository Structure
 
 ```
 90-days-90-projects-day-30-returvex/
@@ -216,7 +236,7 @@ The demonstration database is generated using seed `42` (`backend/scripts/seed_d
 
 ---
 
-## 10. Quickstart & Local Setup
+## 11. Quickstart & Local Setup
 
 ### Prerequisites
 - **Python**: Version 3.10, 3.11, 3.12, 3.13, or 3.14
@@ -273,7 +293,7 @@ Open your browser at **`http://localhost:5173`**.
 
 ---
 
-## 11. Automated Testing & Verification
+## 12. Automated Testing & Verification
 
 RETURVEX includes a complete 23-test automated quality assurance suite.
 
@@ -297,7 +317,7 @@ npm test -- --run
 
 ---
 
-## 12. REST API Reference
+## 13. REST API Reference
 
 The FastAPI backend automatically provides interactive OpenAPI documentation at **`http://127.0.0.1:8000/docs`**.
 
@@ -325,7 +345,7 @@ The FastAPI backend automatically provides interactive OpenAPI documentation at 
 
 ---
 
-## 13. Interactive 4-Step CSV Import Pipeline
+## 14. Interactive 4-Step CSV Import Pipeline
 
 The `/data-management` interface enables operators to import production data using a transactional 4-step wizard:
 1. **File Upload**: Upload standard `.csv` files for products, orders, or returns.
@@ -335,7 +355,7 @@ The `/data-management` interface enables operators to import production data usi
 
 ---
 
-## 14. Configuration & Environment Variables
+## 15. Configuration & Environment Variables
 
 Create a `.env` file in the project root (or copy `.env.example`):
 
@@ -357,7 +377,7 @@ VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 
 ---
 
-## 15. Operational Troubleshooting
+## 16. Operational Troubleshooting
 
 | Symptom | Diagnostic Check | Resolution |
 | :--- | :--- | :--- |
@@ -370,7 +390,14 @@ VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 
 ---
 
+## 17. Author & 90 Days Challenge Context
 
-## 16. License
+- **Challenge**: 90 Days – 90 Projects Challenge (Day 30 Project)
+- **Domain**: E-Commerce Intelligence / Machine Learning / Financial Analytics
+- **Standard**: Production-style full-stack application built for hackathons, engineering portfolios, and enterprise recruitment.
+
+---
+
+## 18. License
 
 This project is licensed under the **MIT License**. See the [LICENSE](file:///D:/90%20days/90-days-90-projects-day-30-returvex/LICENSE) file for complete terms.

@@ -41,6 +41,6 @@ Thumbs.db
 *.swp
 *.swo
 
-# Screenshots (Excluded from git push)
-screenshots/
-app_screenshots/
+# Raw Full Screenshots Directory (Excluded from git push)
+/screenshots/
+/app_screenshots/
